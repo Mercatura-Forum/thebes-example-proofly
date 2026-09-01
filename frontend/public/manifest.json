@@ -1,0 +1,18 @@
+{
+  "name": "Proofly — Decentralized Employment Verification",
+  "short_name": "Proofly",
+  "description": "Generate and verify tamper-proof employment codes on the Thebes Protocol.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6C3FC5",
+  "icons": [
+    {
+      "src": "images/proofly-logo.png",
+      "sizes": "347x350",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

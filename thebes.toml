@@ -1,0 +1,50 @@
+# thebes.toml — Proofly's deploy manifest.
+#
+# One file describes the whole deploy: which network, which smart contracts,
+# how each is built, and where its wasm and bundle live. `thebes-deploy deploy`
+# reads this, builds, signs the install envelope, chunks the wasm across the
+# validator set, uploads the frontend bundle and verifies the result.
+#
+# This manifest is the only deployment configuration Proofly has.
+
+[project]
+name = "proofly"
+default_network = "wan-experimental"
+chain_id = 2026                      # the WAN cluster's chain id
+
+[networks.wan-experimental]
+# One stable public name resolves the whole validator set behind the boundary.
+# Never put validator addresses here — a validator rehoming is a boundary-side
+# change, and this file should not have to know about it.
+gateway = "https://memphis.mercaturaforum.com"
+routing = "smart"                    # route each call to the lowest-load validator
+
+# ── The Proofly contract ─────────────────────────────────────────────────────
+#
+# Rust, compiled to wasm32-unknown-unknown. The build runs from the project
+# root, which is also where .cargo/config.toml lives — that file adds
+# `--export-table`, without which the contract fails to instantiate on the
+# cluster the moment ic-cdk registers its call-cleanup callback.
+[canisters.backend]
+type  = "backend-rust"
+cid   = 85822817261869
+wasm  = "target/wasm32-unknown-unknown/release/backend.wasm"
+build = "cargo build --release --target wasm32-unknown-unknown --manifest-path backend/Cargo.toml"
+
+# ── The web frontend ─────────────────────────────────────────────────────────
+#
+# Installs the asset contract wasm, then uploads the exported Next.js bundle.
+# The boundary serves it at /_/raw/<cid>/<path>.
+#
+# The cids above are baked into the bundle at build time (the backend's cid so
+# the app knows who to call, the frontend's own cid so Next.js emits asset URLs
+# under the right prefix), which is why both are literal here rather than
+# "auto". `scripts/build-frontend.sh` reads them straight out of this file, so
+# this manifest stays the single source of truth.
+[canisters.frontend]
+type   = "frontend"
+cid    = 95417562499047
+wasm   = "frontend/asset_canister.wasm"
+build  = "./scripts/build-frontend.sh"
+bundle = "frontend/out"
+health_check_url = "/index.html"

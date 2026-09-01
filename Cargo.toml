@@ -1,0 +1,11 @@
+[workspace]
+members = ["backend"]
+resolver = "2"
+
+# Release profile for the contract wasm. It lives at the workspace root because
+# cargo ignores `[profile.*]` in a member manifest.
+[profile.release]
+lto = true
+opt-level = "z"
+strip = "symbols"
+codegen-units = 1

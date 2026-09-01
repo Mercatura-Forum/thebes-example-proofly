@@ -1,0 +1,49 @@
+type CompanyEmployeeWithName = record {
+  employee_name : text;
+  position : text;
+  employee_id : text;
+};
+type ProofResult = record {
+  employee_name : text;
+  company_name : text;
+  created_at : nat64;
+  company_username : text;
+  position : text;
+  employee_id : text;
+};
+type Result = variant { Ok; Err : text };
+type Result_1 = variant { Ok : text; Err : text };
+type Result_2 = variant { Ok : vec CompanyEmployeeWithName; Err : text };
+type Result_3 = variant { Ok : vec text; Err : text };
+type Result_4 = variant { Ok : ProofResult; Err : text };
+service : () -> {
+  add_employee : (blob, text, text, text) -> (Result);
+  add_new_companey : (blob, text, text) -> (Result);
+  delete_company : (blob, text) -> (Result);
+  edit_company : (blob, text, text) -> (Result);
+  generate_proof : (blob, text) -> (Result_1);
+  // A company's display name. **Open on purpose** — a verifier reading a proof
+  // needs to resolve the employer without holding an account.
+  get_company_name : (text) -> (Result_1) query;
+  get_my_name : (blob) -> (Result_1);
+  // This caller's stable Proofly principal — the id an administrator adds to a
+  // company. It is the same for this person on every visit, and unlinkable to
+  // their identity in any other Thebes app.
+  get_principal : (blob) -> (Result_1);
+  list_company_employess : (blob, text) -> (Result_2);
+  list_my_admin_companies : (blob) -> (Result_3);
+  list_my_companies : (blob) -> (Result_3);
+  // Drop this contract's cached view of a session on sign-out.
+  // 
+  // Local only: `end_session` on Memphis is caller-scoped, so ending the
+  // person's actual Memphis session is the browser's to do, not ours.
+  memphis_sign_out : (blob) -> ();
+  remove_employee : (blob, text, text) -> (Result);
+  set_full_name : (blob, text) -> (Result);
+  // Redeem a proof code. **Open on purpose** — the person checking a proof is a
+  // bank or a court, not a Proofly user.
+  // 
+  // Single use: a redeemed code is spent, so a screenshot forwarded to someone
+  // else is worthless.
+  verify_proof : (text) -> (Result_4);
+}

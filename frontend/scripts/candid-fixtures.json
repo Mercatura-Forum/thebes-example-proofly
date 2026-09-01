@@ -1,0 +1,364 @@
+{
+  "note": "Golden Candid vectors, generated once by an independent reference implementation of the Candid wire format and committed as ground truth for scripts/check-codec.mjs. Proofly's own codec (src/lib/thebes/candid.ts) is asserted against these byte for byte.",
+  "cases": [
+    {
+      "name": "set_full_name",
+      "argKinds": [
+        "blob",
+        "text"
+      ],
+      "argsHex": "4449444c016d7b0200712007070707070707070707070707070707070707070707070707070707070707070461636d65",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        },
+        "acme"
+      ],
+      "retName": "ResultUnit",
+      "retHex": "4449444c016b02bc8a017fc5fed20171010000",
+      "retVal": {
+        "Ok": null
+      }
+    },
+    {
+      "name": "get_my_name",
+      "argKinds": [
+        "blob"
+      ],
+      "argsHex": "4449444c016d7b0100200707070707070707070707070707070707070707070707070707070707070707",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        }
+      ],
+      "retName": "ResultText",
+      "retHex": "4449444c016b02bc8a0171c5fed2017101000005416d697261",
+      "retVal": {
+        "Ok": "Amira"
+      }
+    },
+    {
+      "name": "get_principal",
+      "argKinds": [
+        "blob"
+      ],
+      "argsHex": "4449444c016d7b0100200707070707070707070707070707070707070707070707070707070707070707",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        }
+      ],
+      "retName": "ResultText",
+      "retHex": "4449444c016b02bc8a0171c5fed2017101000009616161612d62626262",
+      "retVal": {
+        "Ok": "aaaa-bbbb"
+      }
+    },
+    {
+      "name": "generate_proof",
+      "argKinds": [
+        "blob",
+        "text"
+      ],
+      "argsHex": "4449444c016d7b0200712007070707070707070707070707070707070707070707070707070707070707070461636d65",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        },
+        "acme"
+      ],
+      "retName": "ResultText",
+      "retHex": "4449444c016b02bc8a0171c5fed201710100000c6b334c70396d5178376e3432",
+      "retVal": {
+        "Ok": "k3Lp9mQx7n42"
+      }
+    },
+    {
+      "name": "verify_proof",
+      "argKinds": [
+        "text"
+      ],
+      "argsHex": "4449444c0001710c6b334c70396d5178376e3432",
+      "argVals": [
+        "k3Lp9mQx7n42"
+      ],
+      "retName": "ResultProof",
+      "retHex": "4449444c026c06fc8194ce0471cdb781f30571aaacd9d0067898b1b1ec0971a9c1ead70c71ccd8f0ae0f716b02bc8a0100c5fed2017101010001410142d20a1feb8ca954ab0461636d650343544f0170",
+      "retVal": {
+        "Ok": {
+          "employee_name": "A",
+          "company_name": "B",
+          "created_at": {
+            "nat64": "12345678901234567890"
+          },
+          "company_username": "acme",
+          "position": "CTO",
+          "employee_id": "p"
+        }
+      }
+    },
+    {
+      "name": "verify_proof_err",
+      "argKinds": [
+        "text"
+      ],
+      "argsHex": "4449444c0001710c4e4f53554348434f44453939",
+      "argVals": [
+        "NOSUCHCODE99"
+      ],
+      "retName": "ResultProof",
+      "retHex": "4449444c026c06fc8194ce0471cdb781f30571aaacd9d0067898b1b1ec0971a9c1ead70c71ccd8f0ae0f716b02bc8a0100c5fed201710101010f50726f6f66206e6f7420666f756e64",
+      "retVal": {
+        "Err": "Proof not found"
+      }
+    },
+    {
+      "name": "list_my_companies",
+      "argKinds": [
+        "blob"
+      ],
+      "argsHex": "4449444c016d7b0100200707070707070707070707070707070707070707070707070707070707070707",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        }
+      ],
+      "retName": "ResultTextVec",
+      "retHex": "4449444c026d716b02bc8a0100c5fed201710101000201610162",
+      "retVal": {
+        "Ok": [
+          "a",
+          "b"
+        ]
+      }
+    },
+    {
+      "name": "list_my_admin_companies",
+      "argKinds": [
+        "blob"
+      ],
+      "argsHex": "4449444c016d7b0100200707070707070707070707070707070707070707070707070707070707070707",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        }
+      ],
+      "retName": "ResultTextVec",
+      "retHex": "4449444c026d716b02bc8a0100c5fed20171010101046e6f7065",
+      "retVal": {
+        "Err": "nope"
+      }
+    },
+    {
+      "name": "get_company_name",
+      "argKinds": [
+        "text"
+      ],
+      "argsHex": "4449444c0001710461636d65",
+      "argVals": [
+        "acme"
+      ],
+      "retName": "ResultText",
+      "retHex": "4449444c016b02bc8a0171c5fed2017101000111436f6d70616e79206e6f7420666f756e64",
+      "retVal": {
+        "Err": "Company not found"
+      }
+    },
+    {
+      "name": "list_company_employess",
+      "argKinds": [
+        "blob",
+        "text"
+      ],
+      "argsHex": "4449444c016d7b0200712007070707070707070707070707070707070707070707070707070707070707070461636d65",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        },
+        "acme"
+      ],
+      "retName": "ResultEmployees",
+      "retHex": "4449444c036c03fc8194ce0471a9c1ead70c71ccd8f0ae0f716d006b02bc8a0101c5fed201710102000201410343544f017001420343464f0171",
+      "retVal": {
+        "Ok": [
+          {
+            "employee_name": "A",
+            "position": "CTO",
+            "employee_id": "p"
+          },
+          {
+            "employee_name": "B",
+            "position": "CFO",
+            "employee_id": "q"
+          }
+        ]
+      }
+    },
+    {
+      "name": "list_company_employess_empty",
+      "argKinds": [
+        "blob",
+        "text"
+      ],
+      "argsHex": "4449444c016d7b0200712007070707070707070707070707070707070707070707070707070707070707070461636d65",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        },
+        "acme"
+      ],
+      "retName": "ResultEmployees",
+      "retHex": "4449444c036c03fc8194ce0471a9c1ead70c71ccd8f0ae0f716d006b02bc8a0101c5fed2017101020000",
+      "retVal": {
+        "Ok": []
+      }
+    },
+    {
+      "name": "add_employee",
+      "argKinds": [
+        "blob",
+        "text",
+        "text",
+        "text"
+      ],
+      "argsHex": "4449444c016d7b04007171712007070707070707070707070707070707070707070707070707070707070707070461636d6501700343544f",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        },
+        "acme",
+        "p",
+        "CTO"
+      ],
+      "retName": "ResultUnit",
+      "retHex": "4449444c016b02bc8a017fc5fed201710100010664656e696564",
+      "retVal": {
+        "Err": "denied"
+      }
+    },
+    {
+      "name": "remove_employee",
+      "argKinds": [
+        "blob",
+        "text",
+        "text"
+      ],
+      "argsHex": "4449444c016d7b030071712007070707070707070707070707070707070707070707070707070707070707070461636d650170",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        },
+        "acme",
+        "p"
+      ],
+      "retName": "ResultUnit",
+      "retHex": "4449444c016b02bc8a017fc5fed20171010000",
+      "retVal": {
+        "Ok": null
+      }
+    },
+    {
+      "name": "add_new_companey",
+      "argKinds": [
+        "blob",
+        "text",
+        "text"
+      ],
+      "argsHex": "4449444c016d7b030071712007070707070707070707070707070707070707070707070707070707070707070461636d650441636d65",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        },
+        "acme",
+        "Acme"
+      ],
+      "retName": "ResultUnit",
+      "retHex": "4449444c016b02bc8a017fc5fed20171010000",
+      "retVal": {
+        "Ok": null
+      }
+    },
+    {
+      "name": "edit_company",
+      "argKinds": [
+        "blob",
+        "text",
+        "text"
+      ],
+      "argsHex": "4449444c016d7b030071712007070707070707070707070707070707070707070707070707070707070707070461636d650541636d6532",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        },
+        "acme",
+        "Acme2"
+      ],
+      "retName": "ResultUnit",
+      "retHex": "4449444c016b02bc8a017fc5fed20171010000",
+      "retVal": {
+        "Ok": null
+      }
+    },
+    {
+      "name": "delete_company",
+      "argKinds": [
+        "blob",
+        "text"
+      ],
+      "argsHex": "4449444c016d7b0200712007070707070707070707070707070707070707070707070707070707070707070461636d65",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        },
+        "acme"
+      ],
+      "retName": "ResultUnit",
+      "retHex": "4449444c016b02bc8a017fc5fed20171010000",
+      "retVal": {
+        "Ok": null
+      }
+    },
+    {
+      "name": "memphis_sign_out",
+      "argKinds": [
+        "blob"
+      ],
+      "argsHex": "4449444c016d7b0100200707070707070707070707070707070707070707070707070707070707070707",
+      "argVals": [
+        {
+          "blob": "0707070707070707070707070707070707070707070707070707070707070707"
+        }
+      ]
+    },
+    {
+      "name": "unicode_text",
+      "argKinds": [
+        "text"
+      ],
+      "argsHex": "4449444c00017116cea920d985d8b1d8add8a8d8a720f09f87aaf09f87ac",
+      "argVals": [
+        "\u03a9 \u0645\u0631\u062d\u0628\u0627 \ud83c\uddea\ud83c\uddec"
+      ],
+      "retName": "ResultText",
+      "retHex": "4449444c016b02bc8a0171c5fed2017101000016cea920d985d8b1d8add8a8d8a720f09f87aaf09f87ac",
+      "retVal": {
+        "Ok": "\u03a9 \u0645\u0631\u062d\u0628\u0627 \ud83c\uddea\ud83c\uddec"
+      }
+    },
+    {
+      "name": "empty_text",
+      "argKinds": [
+        "text"
+      ],
+      "argsHex": "4449444c00017100",
+      "argVals": [
+        ""
+      ],
+      "retName": "ResultText",
+      "retHex": "4449444c016b02bc8a0171c5fed2017101000000",
+      "retVal": {
+        "Ok": ""
+      }
+    }
+  ]
+}

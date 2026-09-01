@@ -1,0 +1,26 @@
+# Various IDEs and Editors
+.vscode/
+.idea/
+**/*~
+
+# Mac OSX temporary files
+.DS_Store
+**/.DS_Store
+
+# rust
+target/
+
+# frontend
+node_modules/
+frontend/out/
+
+# thebes-deploy build outputs
+build/
+
+# local identity material never belongs in a repo
+*.seed
+*.secret.json
+
+# environment variables
+.env
+.env.local

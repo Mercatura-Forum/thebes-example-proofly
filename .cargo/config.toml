@@ -1,0 +1,11 @@
+# Export the indirect-function table so the Thebes substrate's wasmtime sees
+# `__indirect_function_table` at instantiate time. Required as soon as a
+# dependency uses async hooks (ic-cdk's inter-contract call machinery does);
+# harmless otherwise.
+#
+# It lives at the WORKSPACE ROOT, not under backend/. Cargo reads .cargo/config.toml
+# from the invocation directory upward, and the manifest's build command runs from
+# the project root — a copy under backend/ would be silently ignored, and the
+# missing table only surfaces as an instantiate failure on the cluster.
+[target.wasm32-unknown-unknown]
+rustflags = ["-C", "link-arg=--export-table"]

@@ -1,0 +1,35 @@
+[package]
+name = "backend"
+version = "0.1.0"
+edition = "2021"
+description = "Proofly — employment-proof smart contract for the Thebes Protocol substrate."
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+# Thebes exposes the standard `ic0.*` WebAssembly system interface, so the
+# `ic-cdk` crate compiles and links against it unchanged. It is the substrate's
+# toolchain, not an integration with any other network.
+#
+# ic-cdk is PINNED TO 0.17 ON PURPOSE. 0.19's call builder emits
+# `ic0.cost_call` and `ic0.canister_liquid_cycle_balance128`, and the Thebes
+# runtime (crates/egypt-wasm/src/host.rs) registers neither — a contract that
+# makes an inter-contract call would fail to instantiate with an unresolved
+# import. This contract calls Memphis and the management contract, so it hits
+# exactly that path. Verify before bumping:
+#
+#   wasm-objdump -j Import -x target/wasm32-unknown-unknown/release/backend.wasm \
+#     | grep -oE '<- ic0\.[a-z0-9_]+'
+#
+# Every name it prints must exist in the substrate's host table.
+[dependencies]
+candid = "0.10"
+ic-cdk = "0.17"
+ic-cdk-macros = "0.17"
+ic-stable-structures = "0.7"
+serde = { version = "1.0.123", features = ["derive"] }
+sha2 = "0.10"
+hex = "0.4"
+
+# The release profile lives at the workspace root — cargo ignores it here.
