@@ -52,3 +52,9 @@ taken; when something misbehaves, diff against the copy a working production app
 uses rather than against the newest tag.
 
 Licensed Apache-2.0 by the Thebes Protocol contributors.
+
+## Signed ingress
+
+`passkey.js` is the SDK runtime that signs its Memphis calls with Ed25519. `noble-ed25519-3.1.0.js`
+is the unmodified `@noble/ed25519` 3.1.0 `index.js` (MIT, Paul Miller), loaded only by browsers without
+WebCrypto Ed25519, by `passkey.js` and by `src/lib/thebes/boundary.ts`.
