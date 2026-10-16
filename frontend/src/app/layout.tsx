@@ -111,7 +111,7 @@ export default function RootLayout({
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src={`${basePath}/memphis-connect.js`}></script>
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script src={`${basePath}/passkey.js`}></script>
+        <script src={`${basePath}/passkey.js?v=dac33dc7`}></script>
         <AuthProvider>
           <ToastProvider>
             <ConditionalNavbar />
